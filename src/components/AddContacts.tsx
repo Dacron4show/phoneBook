@@ -15,7 +15,7 @@ export default function AddContacts() {
 	return (
 		<Dialog>
 			<DialogTrigger asChild>
-				<Button variant="outline">Add Contact</Button>
+				<Button >Add Contact</Button>
 			</DialogTrigger>
 			<DialogContent className="sm:max-w-[425px]">
 				<DialogHeader>
@@ -66,7 +66,7 @@ export default function AddContacts() {
 					<DialogClose asChild>
 						<Button
 							type="button"
-							variant="secondary">
+						>
 							Save Contact
 						</Button>
 					</DialogClose>

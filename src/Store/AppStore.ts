@@ -1,10 +1,15 @@
 import { create } from "zustand";
 
-interface yourStore {
+interface AppStore {
   search: string;
   setSearch: (search: string) => void;
+  isDarkMode: boolean;
+  setIsDarkMode: (isDarkMode:boolean) => void;
 }
-export const appStore = create<yourStore>((set) => ({
+export const appStore = create<AppStore>((set) => ({
   search: "",
   setSearch: (search) => set({ search }),
+  isDarkMode: true,
+  setIsDarkMode: (isDarkMode) => set({ isDarkMode }),
+
 }));
