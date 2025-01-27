@@ -6,15 +6,15 @@ function Contacts() {
 	const { contacts } = appStore();
 	return (
 		<div>
-			{contacts.map((contact, index) => (
+			{contacts.map(({ name, email, tel, id }) => (
 				<Card
 					className="shadow-lg"
-					key={index}>
+					key={id}>
 					<div className="flex items-center justify-between p-6">
 						<div className="space-y-2">
-							<h3 className="font-semibold text-lg">{contact.name}</h3>
-							<p className="text-gray-600">{contact.tel}</p>
-							<p className="text-gray-500 text-sm">{contact.email}</p>
+							<h3 className="font-semibold text-lg">{name}</h3>
+							<p className="text-gray-600">{tel}</p>
+							<p className="text-gray-500 text-sm">{email}</p>
 						</div>
 						<Pencil
 							size={20}
