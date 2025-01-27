@@ -12,24 +12,15 @@ import {
 } from './ui/dialog';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import { useState } from 'react';
 
 export default function AddContacts() {
-	const { addContact } = appStore();
+	const { addContact, email, name, tel, setName, setEmail, setTel, isDialogOpen, setIsDialogOpen } = appStore();
 
-	const [email, setEmail] = useState<string>('');
-	const [name, setName] = useState<string>('');
-	const [tel, setTel] = useState<string>('');
-
-	function saveContact(name: string, email: string, tel: string): void {
-		addContact(name, email, tel);
-		setName('');
-		setEmail('');
-		setTel('');
-	}
+	
+	
 
 	return (
-		<Dialog>
+		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
 				<Button>Add Contact</Button>
 			</DialogTrigger>
@@ -89,7 +80,7 @@ export default function AddContacts() {
 						<Button
 							type="button"
 							disabled={!(name && email && tel)}
-							onClick={() => saveContact(name, email, tel)}>
+							onClick={() => addContact(name, email, tel)}>
 							Save Contact
 						</Button>
 					</DialogClose>

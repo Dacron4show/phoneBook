@@ -2,8 +2,9 @@ import { Card } from './ui/card';
 import { Pencil } from 'lucide-react';
 import { appStore } from '@/Store/AppStore';
 
+
 function Contacts() {
-	const { contacts } = appStore();
+	const { contacts, setIsDialogOpen } = appStore();
 	return (
 		<div>
 			{contacts.map((contact, index) => (
@@ -16,9 +17,11 @@ function Contacts() {
 							<p className="text-gray-600">{contact.tel}</p>
 							<p className="text-gray-500 text-sm">{contact.email}</p>
 						</div>
+						
 						<Pencil
 							size={20}
 							className="cursor-pointer"
+							onClick={() => setIsDialogOpen(true)}
 						/>
 					</div>
 				</Card>
