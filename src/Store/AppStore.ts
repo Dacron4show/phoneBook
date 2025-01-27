@@ -1,9 +1,11 @@
 import { create } from 'zustand';
+import ShortUniqueId from 'short-unique-id';
 
 interface Contact {
-  name: string;
-  email: string;
-  tel: string;
+	name: string;
+	email: string;
+	tel: string;
+	id: string;
 }
 
 interface AppStore {
@@ -31,6 +33,7 @@ interface AppStore {
   setIsDialogOpen: (isDialogOpen: boolean) => void;
 }
 
+const uid = new ShortUniqueId();
 export const appStore = create<AppStore>((set, get) => ({
   // Form fields
   name: '',
@@ -52,16 +55,18 @@ export const appStore = create<AppStore>((set, get) => ({
       name: 'Joe Smith',
       email: 'joe@example.com',
       tel: '08012345678',
+      id: uid.randomUUID(),
     },
   ],
   setContact: (contacts) => set({ contacts }),
   addContact(name: string, email: string, tel: string) {
     const state = get();
     set({
-      contacts: [...state.contacts, { name, email, tel }],
+      contacts: [...state.contacts, { name, email, tel, id: uid.randomUUID() }],
     });
   },
    //Dialog control
    isDialogOpen: true,
    setIsDialogOpen: (isDialogOpen) => set({isDialogOpen	}),
 }));
+
