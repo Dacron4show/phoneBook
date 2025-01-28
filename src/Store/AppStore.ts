@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
-interface Contact {
+export interface Contact {
+  id: string; 
   name: string;
   email: string;
   tel: string;
@@ -22,13 +23,17 @@ interface AppStore {
   setIsDarkMode: (isDarkMode: boolean) => void;
   
   // Contacts management
-  contacts: Contact[];
-  setContact: (contacts: Contact[]) => void;
+  contacts: Array<Contact>;
+  setContact: (contacts: Array<Contact>) => void;
   addContact: (name: string, email: string, tel: string) => void;
-
-  //Dialog control
+  updateContact: (id: string, name: string, email: string, tel: string) => void;
+  
+  // Dialog control
   isDialogOpen: boolean;
   setIsDialogOpen: (isDialogOpen: boolean) => void;
+  editingContactId: string | null;
+  setEditingContactId: (id: string | null) => void;
+  resetForm: () => void;
 }
 
 export const appStore = create<AppStore>((set, get) => ({
@@ -49,6 +54,7 @@ export const appStore = create<AppStore>((set, get) => ({
   // Contacts management
   contacts: [
     {
+      id: '1', // Add ID to initial contact
       name: 'Joe Smith',
       email: 'joe@example.com',
       tel: '08012345678',
@@ -58,10 +64,27 @@ export const appStore = create<AppStore>((set, get) => ({
   addContact(name: string, email: string, tel: string) {
     const state = get();
     set({
-      contacts: [...state.contacts, { name, email, tel }],
+      contacts: [...state.contacts, { 
+        id: crypto.randomUUID(), // Generate unique ID
+        name, 
+        email, 
+        tel 
+      }],
     });
   },
-   //Dialog control
-   isDialogOpen: true,
-   setIsDialogOpen: (isDialogOpen) => set({isDialogOpen	}),
+  updateContact(id: string, name: string, email: string, tel: string) {
+    const state = get();
+    set({
+      contacts: state.contacts.map(contact =>
+        contact.id === id ? { ...contact, name, email, tel } : contact
+      ),
+    });
+  },
+  
+  // Dialog control
+  isDialogOpen: false,
+  setIsDialogOpen: (isDialogOpen) => set({ isDialogOpen }),
+  editingContactId: null,
+  setEditingContactId: (id) => set({ editingContactId: id }),
+  resetForm: () => set({ name: '', email: '', tel: '', editingContactId: null }),
 }));
